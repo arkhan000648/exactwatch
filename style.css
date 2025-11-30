@@ -1,0 +1,31 @@
+/* Animation for Pulse Effect */
+.pulse-anim {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 153, 0, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(255, 153, 0, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 153, 0, 0); }
+}
+
+/* Custom Scrollbar for Reviews */
+#reviewsContainer::-webkit-scrollbar {
+    width: 6px;
+}
+#reviewsContainer::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+#reviewsContainer::-webkit-scrollbar-thumb {
+    background: #d1d5db; 
+    border-radius: 4px;
+}
+#reviewsContainer::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af; 
+}
+
+/* Smooth Scroll behavior fix for fixed headers */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px; /* Offset for sticky header */
+}
