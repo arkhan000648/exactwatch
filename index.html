@@ -20,8 +20,9 @@
     <meta property="og:url" content="https://yoursite.com/">
     <meta property="og:image" content="https://yoursite.com/Images/testimage.webp">
     
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="style.css">
+    <!-- Load main style.css Asynchronously (Non-blocking) -->
+<link rel="stylesheet" href="style.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="style.css"></noscript>
     
     <!-- Google Fonts (Optimized for Speed) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,8 +33,10 @@
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     </noscript>
 
-    <!-- Preload Hero Image -->
-	<link rel="preload" as="image" href="Images/productimage1.webp" fetchpriority="high">
+   <!-- Preload Critical Assets -->
+<link rel="preload" href="Images/productimage1.webp" as="image" fetchpriority="high">
+<!-- Preload the Icon Font (Fixes the 784ms delay) -->
+<link rel="preload" href="font/fontello.woff2" as="font" type="font/woff2" crossorigin>
     <!-- Deferred Main Script -->
     <script src="script.js" defer></script>
 
@@ -125,6 +128,8 @@
       }]
     }
     </script>
+
+	
 	<style>
 		/* --- CRITICAL CSS (Above the Fold Only) --- */
 @font-face{font-family:fontello;src:url('font/fontello.eot');src:url('font/fontello.eot?#iefix') format('embedded-opentype'),url('font/fontello.woff2') format('woff2'),url('font/fontello.woff') format('woff'),url('font/fontello.ttf') format('truetype'),url('font/fontello.svg#fontello') format('svg');font-weight:400;font-style:normal;font-display:swap}
@@ -185,6 +190,8 @@ ul{list-style:none}
 /* Media Queries for Desktop */
 @media (min-width:768px){body{padding-bottom:0}.header{position:sticky}.desktop-nav,.header-cta{display:block}.mobile-menu-toggle{display:none}}
 @media (min-width:1024px){.hero-section{padding:3rem 0 5rem}.hero-grid{grid-template-columns:1fr 1fr;align-items:center}.meta-data-wrapper{text-align:left}.hero-title-wrapper h1{font-size:3rem;text-align:left}.rating-wrapper{justify-content:flex-start}.hero-description{text-align:left}.cta-wrapper{justify-content:flex-start}.mobile-carousel{display:none}.desktop-carousel-wrapper{display:block;position:relative}.desktop-carousel{max-width:500px;margin:0 auto;box-shadow:0 20px 25px -5px rgba(0,0,0,.1)}}
+		.carousel-track { display: flex; width: 100%; height: 100%; }
+    .carousel-track img { width: 100%; flex-shrink: 0; flex-grow: 0; }
 	</style>
 </head>
 <body>
@@ -738,6 +745,7 @@ ul{list-style:none}
 
 </body>
 </html>
+
 
 
 
