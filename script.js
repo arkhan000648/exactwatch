@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     
     // --- CONFIGURATION ---
-    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzX3d3e_FCMCm7eRsqIfHyWR6-srNKB4gKY7w1e8uvL7A25zGwlu-aIWa6TFCNJ-UQGXg/exec'; 
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxrEAAdFp2p0LXPYfd1COyA_8pV2Phrwq7LCkys83H0yjfdvtJL7CNzy11wqFnUCjXO/exec'; 
 
     // 1. Dynamic Date
     const dateElement = document.getElementById('dynamic-date');
@@ -342,3 +342,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+
