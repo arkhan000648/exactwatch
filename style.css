@@ -104,7 +104,20 @@ ul { list-style: none; }
 }
 
 /* --- HEADER --- */
-.header { position: sticky; top: 0; z-index: 50; background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid #e5e7eb; }
+/* --- HEADER --- */
+.header { 
+    position: relative; /* Changed: Scrolls away on mobile */
+    top: 0; 
+    z-index: 50; 
+    background-color: rgba(255, 255, 255, 0.95); 
+    backdrop-filter: blur(10px); 
+    border-bottom: 1px solid #e5e7eb; 
+}
+
+/* Add this: Only sticky on Desktop */
+@media (min-width: 768px) {
+    .header { position: sticky; }
+}
 .header-container { height: 64px; display: flex; align-items: center; justify-content: space-between; }
 .logo { font-size: 1.25rem; font-weight: 700; }
 .logo span { color: var(--accent-blue); }
@@ -320,7 +333,28 @@ ul { list-style: none; }
 .footer-links a:hover { color: var(--accent-blue); }
 .disclaimer { max-width: 48rem; margin: 0 auto 1.5rem; font-size: 0.75rem; color: #9ca3af; line-height: 1.5; }
 .copyright { font-size: 0.875rem; color: #6b7280; font-weight: 500; }
-.mobile-sticky-footer { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px); border-top: 1px solid #e5e7eb; padding: 0.75rem; display: flex; justify-content: space-between; align-items: center; z-index: 50; box-shadow: 0 -4px 6px -1px rgba(0,0,0,0.1); }
+/* Sticky Mobile Footer */
+.mobile-sticky-footer { 
+    position: fixed; 
+    bottom: 0; 
+    left: 0; 
+    width: 100%; 
+    background: rgba(255, 255, 255, 0.95); 
+    backdrop-filter: blur(5px); 
+    border-top: 1px solid #e5e7eb; 
+    padding: 0.75rem; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    z-index: 50; 
+    box-shadow: 0 -4px 6px -1px rgba(0,0,0,0.1); 
+}
+
+/* Add this: Hide on Desktop */
+@media (min-width: 768px) {
+    .mobile-sticky-footer { display: none; }
+}
 .footer-info { display: flex; flex-direction: column; }
 .footer-prod-name { font-weight: 700; font-size: 0.875rem; color: #111827; }
 .footer-deal-text { color: #16a34a; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; gap: 0.25rem; }
+
