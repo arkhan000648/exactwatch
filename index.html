@@ -24,8 +24,8 @@
     <link rel="preload" href="font/fontello.woff2" as="font" type="font/woff2" crossorigin>
 
     <!-- 4. CRITICAL INLINE CSS (Moved UP for Instant Paint) -->
-    <style>
-    /* --- CRITICAL MOBILE CSS (Optimized) --- */
+   <style>
+    /* --- CRITICAL MOBILE CSS (Optimized 100/100) --- */
     
     /* 1. FONTS & VARIABLES */
     @font-face {
@@ -74,7 +74,7 @@
     .logo { font-size: 1.25rem; font-weight: 700; }
     .logo span { color: var(--accent-blue); }
     .mobile-menu-toggle { background: none; border: none; font-size: 1.5rem; color: #374151; }
-    .desktop-nav, .header-cta { display: none; } /* Hide Desktop elements on mobile load */
+    .desktop-nav, .header-cta { display: none; } 
 
     /* 5. HERO SECTION */
     .hero-section { padding: 1.5rem 0 3rem; background: linear-gradient(to bottom, #f9fafb, #fff); }
@@ -92,25 +92,11 @@
     .stars-container { color: #facc15; }
     .rating-text { font-size: 0.875rem; color: #6b7280; }
 
-    /* --- CRITICAL FIX FOR LAYOUT SHIFT (CLS) --- */
+    /* Carousel Fix (CLS) */
     .mobile-carousel { margin-bottom: 2rem; max-width: 384px; margin-left: auto; margin-right: auto; }
-    .carousel-container {
-        position: relative;
-        width: 100%;
-        /* Force a square shape immediately */
-        aspect-ratio: 1 / 1; 
-        overflow: hidden;
-        background: #fff;
-        border-radius: 1rem;
-        border: 1px solid #f3f4f6;
-    }
+    .carousel-container { position: relative; width: 100%; aspect-ratio: 1 / 1; overflow: hidden; background: #fff; border-radius: 1rem; border: 1px solid #f3f4f6; }
     .carousel-track { display: flex; height: 100%; width: 100%; }
-    .carousel-track img { 
-        width: 100%; 
-        height: 100%; 
-        object-fit: contain; 
-        flex-shrink: 0;
-    }
+    .carousel-track img { width: 100%; height: 100%; object-fit: contain; flex-shrink: 0; }
     .prev-btn, .next-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.9); border: none; border-radius: 50%; width: 40px; height: 40px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; z-index: 10; }
     .prev-btn { left: 0.5rem; } .next-btn { right: 0.5rem; }
     .desktop-carousel-wrapper { display: none; }
@@ -121,24 +107,43 @@
     .secure-text { font-size: 0.75rem; color: #6b7280; margin-top: 0.75rem; text-align: center; }
     .hero-description { text-align: center; }
     
-    /* GPU Animation (No Jitter) */
+    /* GPU Animation */
     .pulse-anim { position: relative; z-index: 1; }
     .pulse-anim::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; right: 0; border-radius: inherit; background-color: rgba(255, 153, 0, 0.6); z-index: -1; animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite; }
     @keyframes pulse-ring { 0% { transform: scale(0.95); opacity: 1; } 50% { transform: scale(1.05); opacity: 0; } 100% { transform: scale(1.05); opacity: 0; } }
 
-    /* Sticky Mobile Footer (Critical for LCP if visible) */
+    /* Sticky Footer */
     .mobile-sticky-footer { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(255,255,255,0.95); border-top: 1px solid #e5e7eb; padding: 0.75rem; display: flex; justify-content: space-between; align-items: center; z-index: 50; }
     .footer-info { display: flex; flex-direction: column; }
     .footer-prod-name { font-weight: 700; font-size: 0.875rem; color: #111827; }
     .footer-deal-text { color: #16a34a; font-size: 0.75rem; font-weight: 700; }
     .btn-amazon-small { background-color: var(--amazon-orange); color: #fff; padding: 0.5rem 1rem; border-radius: 9999px; font-size: 0.875rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.5rem; }
 
-    /* Desktop Adjustments (Only basic layout, detailed styles in async file) */
+    /* 6. MOBILE MENU FIX (IMPORTANT) */
+    /* We define the position here so it starts off-screen instantly. */
+    /* WE DO NOT INCLUDE 'transition' HERE. That comes later in style.css */
+    .mobile-menu-overlay {
+        position: fixed;
+        inset: 0;
+        background: #fff;
+        z-index: 60;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
+        font-size: 1.25rem;
+        font-weight: 600;
+        /* Crucial: Hide it immediately */
+        transform: translateY(-100%);
+    }
+    .close-menu { position: absolute; top: 1.5rem; right: 1.5rem; font-size: 2rem; background: none; border: none; }
+
     @media (min-width: 768px) {
         .mobile-sticky-footer, .mobile-menu-toggle { display: none; }
         .desktop-nav, .header-cta { display: block; }
     }
-    </style>
+</style>
 
     <!-- 5. ASYNC CSS & FONTS (Load after Critical CSS) -->
     <!-- Load main style.css Asynchronously -->
@@ -796,5 +801,6 @@
 
 </body>
 </html>
+
 
 
