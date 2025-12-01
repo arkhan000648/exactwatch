@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO META DATA -->
+    <title>Contact Us - Exact Watch | Editor & Support</title>
+    <meta name="description" content="Contact the editorial team at Exact Watch. Ask questions about Apple Watch Ultra 3, report deals, or submit corrections.">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://exactwatch.shop/Contact/">
+    
+    <!-- 1. Load MAIN CSS (From Root - Keeps Header/Footer consistent) -->
+    <link rel="stylesheet" href="../style.css">
+    
+    <!-- 2. Load CONTACT CSS (Local file for Form & Sticky Logic enforcement) -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Deferred Scripts -->
+    <script src="../script.js" defer></script> <!-- Main Mobile Menu Logic -->
+    <script src="script.js" defer></script>    <!-- Contact Form Logic -->
+</head>
+<body>
+
+    <!-- Header (Desktop: Sticky | Mobile: Relative) -->
+    <header class="header">
+        <div class="container header-container">
+            <div class="logo">
+                <a href="../">Exact <span>Watch</span></a>
+            </div>
+
+            <!-- Desktop Nav -->
+            <nav class="desktop-nav">
+                <a href="../#price-analysis">Price</a>
+                <a href="../#specs">Specs</a>
+                <a href="../#comparison">Ultra 3 vs 2</a>
+                <a href="../#reviews-section">Reviews</a>
+            </nav>
+
+            <div class="header-cta">
+                <a href="https://amzn.to/4ol8hN3" target="_blank" rel="nofollow sponsored noopener noreferrer" class="btn-amazon-small">
+                    <i class="icon-amazon"></i> Check Price
+                </a>
+            </div>
+
+            <button class="mobile-menu-toggle" aria-label="Open Menu">
+                <i class="icon-menu"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay">
+        <button class="close-menu" aria-label="Close Menu">
+            <i class="icon-times"></i>
+        </button>
+        <a href="../">Home</a>
+        <a href="../#price-analysis">Price Analysis</a>
+        <a href="/About/">About Us</a>
+        <a href="/Contact/">Contact</a>
+    </div>
+
+    <main>
+        
+        <!-- Page Title -->
+        <section class="contact-hero">
+            <div class="container text-center">
+                <h1>Contact Us</h1>
+                <p>We are here to help you make the right choice.</p>
+            </div>
+        </section>
+
+        <!-- Main Content Area -->
+        <section class="contact-content">
+            <div class="container">
+                <div class="contact-grid">
+                    
+                    <!-- LEFT COLUMN: Info & Trust -->
+                    <div class="contact-info">
+                        
+                        <!-- 1. Editor Info -->
+                        <div class="info-box">
+                            <h3><i class="icon-user"></i> Editorial Team</h3>
+                            <p><strong>Md Ashikuzzaman</strong><br>Editor-in-Chief</p>
+                            <p class="small-text">Specialist in Health Metrics & Wearables.</p>
+                        </div>
+
+                        <!-- 2. Response Time -->
+                        <div class="info-box">
+                            <h3><i class="icon-clock"></i> Response Time</h3>
+                            <p>We analyze every email personally. Please allow <strong>24-48 hours</strong> for a response.</p>
+                        </div>
+
+                        <!-- 3. Technical Support Disclaimer (RESTORED) -->
+                        <div class="info-box support-warning">
+                            <h3>⚠️ Technical Support</h3>
+                            <p>We are an independent publication. For <strong>broken screens, warranty claims, or hardware repairs</strong>, please contact Apple Support directly.</p>
+                            <a href="https://support.apple.com/watch" target="_blank" rel="nofollow noopener" class="external-link">Visit Official Apple Support »</a>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT COLUMN: Secure Form -->
+                    <div class="contact-form-wrapper">
+                        <form id="contactForm">
+                            <!-- FormSubmit Settings -->
+                            <input type="hidden" name="_to" value="YOUR_EMAIL_ADDRESS@gmail.com">
+                            <input type="text" name="_honey" style="display:none">
+                            <input type="hidden" name="_captcha" value="false">
+                            <input type="hidden" name="_subject" value="New Inquiry - Exact Watch">
+
+                            <div class="form-row">
+                                <div class="input-group">
+                                    <label for="name">Your Name</label>
+                                    <input type="text" id="name" name="name" placeholder="John Doe" required>
+                                </div>
+                                <div class="input-group">
+                                    <label for="email">Your Email</label>
+                                    <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                                </div>
+                            </div>
+
+                            <div class="input-group">
+                                <label for="topic">Subject</label>
+                                <select id="topic" name="topic" required>
+                                    <option value="" disabled selected>Select a topic...</option>
+                                    <option value="General Question">General Question</option>
+                                    <option value="Deal Report">Report a Deal / Price Change</option>
+                                    <option value="Partnership">Business / Partnership</option>
+                                    <option value="Other">Other Inquiry</option>
+                                </select>
+                            </div>
+
+                            <div class="input-group">
+                                <label for="message">Message</label>
+                                <textarea id="message" name="message" rows="5" placeholder="How can we help you?" required></textarea>
+                            </div>
+
+                            <button type="submit" class="submit-btn">
+                                <span class="btn-text">Send Message</span>
+                                <i class="icon-paper-plane"></i>
+                            </button>
+                        </form>
+
+                        <div id="status-message" class="hidden"></div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container text-center">
+            <div class="footer-links">
+                <a href="../">Home</a>
+                <a href="/About/">About</a>
+                <a href="/Contact/">Contact</a>
+                <a href="/Terms/">Terms & Conditions</a>
+                <a href="/Privacy/">Privacy Policy</a>
+            </div>
+            <div class="disclaimer">
+                <p><strong>✅ Affiliate Disclosure:</strong> Exact Watch is a participant in the Amazon Services LLC Associates Program.</p>
+            </div>
+            <p class="copyright">&copy; <span id="dynamic-year">2025</span> ExactWatch. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Sticky Mobile Footer (Mobile Only) -->
+    <div class="mobile-sticky-footer">
+        <div class="footer-info">
+            <span class="footer-prod-name">Apple Watch Ultra 3</span>
+            <small class="footer-deal-text"><i class="icon-check-circle"></i> Best Deal</small>
+        </div>
+        <a href="https://amzn.to/4ol8hN3" class="btn-amazon-small" rel="nofollow sponsored noopener noreferrer">
+            <i class="icon-amazon"></i> Check Stock
+        </a>
+    </div>
+
+    <script>
+        document.getElementById('dynamic-year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
