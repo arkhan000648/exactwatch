@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         mobileLinks.forEach(link => link.addEventListener('click', toggleMenu));
     }
 
-    // 3. Infinite Image Carousel
+    // 3. Infinite Image Carousel (Updated with Touch/Swipe Support)
     const setupCarousel = (container) => {
         const track = container.querySelector('.carousel-track');
         const nextBtn = container.querySelector('.next-btn');
@@ -36,6 +36,9 @@ document.addEventListener('DOMContentLoaded', () => {
         let slides = Array.from(track.children);
         if(slides.length === 0) return;
 
+        // Ensure images are loaded before calculating width to prevent bugs
+        // (Optional safety check, though existing logic is fine)
+        
         let slideWidth = slides[0].getBoundingClientRect().width;
         
         const firstClone = slides[0].cloneNode(true);
@@ -88,6 +91,40 @@ document.addEventListener('DOMContentLoaded', () => {
             index--;
             moveSlide();
         });
+
+        // --- NEW CODE: TOUCH EVENTS FOR MOBILE SWIPE ---
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        track.addEventListener('touchstart', (e) => {
+            // Record where the finger landed
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true }); // 'passive' improves scrolling performance
+
+        track.addEventListener('touchend', (e) => {
+            // Record where the finger lifted
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const threshold = 50; // Minimum distance (px) to count as a swipe
+            
+            // Swipe Left (User moves finger Right to Left -> Next Image)
+            if (touchStartX - touchEndX > threshold) {
+                if (index >= slides.length - 1) return;
+                index++;
+                moveSlide();
+            }
+            
+            // Swipe Right (User moves finger Left to Right -> Prev Image)
+            if (touchEndX - touchStartX > threshold) {
+                if (index <= 0) return;
+                index--;
+                moveSlide();
+            }
+        }
+        // --- END NEW CODE ---
     };
 
     document.querySelectorAll('.carousel-container').forEach(setupCarousel);
