@@ -12,10 +12,10 @@
     <!-- Canonical URL -->
     <link rel="canonical" href="https://exactwatch.shop/Contact/">
     
-    <!-- 1. Load MAIN CSS (From Root - Keeps Header/Footer consistent) -->
-    <link rel="stylesheet" href="/style.css">
+    <!-- 1. Load MAIN CSS (From Root) -->
+    <link rel="stylesheet" href="../style.css">
     
-    <!-- 2. Load CONTACT CSS (Local file for Form & Sticky Logic enforcement) -->
+    <!-- 2. Load CONTACT CSS (Local file) -->
     <link rel="stylesheet" href="style.css">
     
     <!-- Google Fonts -->
@@ -23,9 +23,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Deferred Scripts -->
-    <script src="/script.js" defer></script> <!-- Main Mobile Menu Logic -->
-    <script src="script.js" defer></script>    <!-- Contact Form Logic -->
+    <!-- Deferred Script (Local Logic ONLY - No Root Script) -->
+    <script src="script.js" defer></script> 
 </head>
 <body>
 
@@ -33,15 +32,15 @@
     <header class="header">
         <div class="container header-container">
             <div class="logo">
-                <a href="/">Exact <span>Watch</span></a>
+                <a href="../">Exact <span>Watch</span></a>
             </div>
 
             <!-- Desktop Nav -->
             <nav class="desktop-nav">
-                <a href="/#price-analysis">Price</a>
-                <a href="/#specs">Specs</a>
-                <a href="/#comparison">Ultra 3 vs 2</a>
-                <a href="/#reviews-section">Reviews</a>
+                <a href="../#price-analysis">Price</a>
+                <a href="../#specs">Specs</a>
+                <a href="../#comparison">Ultra 3 vs 2</a>
+                <a href="../#reviews-section">Reviews</a>
             </nav>
 
             <div class="header-cta">
@@ -61,8 +60,8 @@
         <button class="close-menu" aria-label="Close Menu">
             <i class="icon-times"></i>
         </button>
-        <a href="/">Home</a>
-        <a href="/#price-analysis">Price Analysis</a>
+        <a href="../">Home</a>
+        <a href="../#price-analysis">Price Analysis</a>
         <a href="/About/">About Us</a>
         <a href="/Contact/">Contact</a>
     </div>
@@ -98,7 +97,7 @@
                             <p>We analyze every email personally. Please allow <strong>24-48 hours</strong> for a response.</p>
                         </div>
 
-                        <!-- 3. Technical Support Disclaimer (RESTORED) -->
+                        <!-- 3. Technical Support Disclaimer -->
                         <div class="info-box support-warning">
                             <h3>⚠️ Technical Support</h3>
                             <p>We are an independent publication. For <strong>broken screens, warranty claims, or hardware repairs</strong>, please contact Apple Support directly.</p>
@@ -161,7 +160,7 @@
     <footer class="footer">
         <div class="container text-center">
             <div class="footer-links">
-                <a href="/">Home</a>
+                <a href="../">Home</a>
                 <a href="/About/">About</a>
                 <a href="/Contact/">Contact</a>
                 <a href="/Terms/">Terms & Conditions</a>
@@ -185,10 +184,5 @@
         </a>
     </div>
 
-    <script>
-        document.getElementById('dynamic-year').textContent = new Date().getFullYear();
-    </script>
 </body>
-
 </html>
-
