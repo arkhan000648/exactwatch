@@ -12,145 +12,123 @@
     <meta name="robots" content="index, follow">
     <meta name="author" content="Md Ashikuzzaman">
 
-    <!-- 2. OPEN GRAPH (Social) - Best to keep with Meta tags -->
-    <meta property="og:title" content="Apple Watch Ultra 3 Price, Specs, Review & Best Deals (2025 Guide)">
-    <meta property="og:description" content="Is the upgrade worth it? Full breakdown of specs, price, and battery life.">
-    <meta property="og:type" content="product">
-    <meta property="og:url" content="https://exactwatch.shop/">
-    <meta property="og:image" content="https://exactwatch.shop/Images/productimage1.webp">
-
-    <!-- 3. PRELOAD CRITICAL ASSETS (Highest Priority) -->
+    <!-- 2. PRELOADS (Highest Priority for Speed) -->
+    <!-- Preload the Main Image -->
     <link rel="preload" href="Images/productimage1.webp" as="image" fetchpriority="high">
+    <!-- Preload the Icon Font -->
     <link rel="preload" href="font/fontello.woff2" as="font" type="font/woff2" crossorigin>
 
-    <!-- 4. CRITICAL INLINE CSS (Moved UP for Instant Paint) -->
-   <style>
-    /* --- CRITICAL MOBILE CSS (Optimized 100/100) --- */
-    
-    /* 1. FONTS & VARIABLES */
-    @font-face {
-        font-family: 'fontello';
-        src: url('font/fontello.woff2') format('woff2');
-        font-weight: 400;
-        font-style: normal;
-        font-display: swap;
-    }
-    :root {
-        --apple-dark: #1d1d1f;
-        --apple-gray: #f5f5f7;
-        --amazon-orange: #ff9900;
-        --accent-blue: #0071e3;
-        --text-color: #1d1d1f;
-        --white: #ffffff;
-        --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-    }
+    <!-- 3. CRITICAL CSS (Includes the MENU FIX) -->
+    <style>
+        /* FONTS (Optimized Order: WOFF2 First) */
+        @font-face {
+            font-family: 'fontello';
+            src: url('font/fontello.woff2') format('woff2'),
+                 url('font/fontello.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        :root{--apple-dark:#1d1d1f;--apple-gray:#f5f5f7;--amazon-orange:#ff9900;--accent-blue:#0071e3;--text-color:#1d1d1f;--text-light:#6e6e73;--white:#ffffff;--border-color:#d1d5db;--font-sans:'Inter',system-ui,-apple-system,sans-serif}
 
-    /* 2. RESET & BASE */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; font-family: var(--font-sans); color: var(--text-color); line-height: 1.5; }
-    body { background-color: var(--white); padding-bottom: 80px; }
-    img { max-width: 100%; height: auto; display: block; }
-    a { text-decoration: none; color: inherit; }
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
-    .hidden { display: none; }
+        /* RESET */
+        *{box-sizing:border-box;margin:0;padding:0}
+        html{scroll-behavior:smooth;scroll-padding-top:80px;font-family:var(--font-sans);color:var(--text-color);line-height:1.5}
+        body{background-color:var(--white);padding-bottom:80px}
+        a{text-decoration:none;color:inherit}
+        img{max-width:100%;height:auto;display:block}
+        ul{list-style:none}
+        .container{max-width:1200px;margin:0 auto;padding:0 1rem}
+        .hidden{display:none}
 
-    /* 3. ICONS (Critical Only) */
-    [class*=" icon-"], [class^=icon-] { font-family: 'fontello'; font-style: normal; display: inline-block; }
-    .icon-menu:before { content: '\f0c9'; }
-    .icon-amazon:before { content: '\f270'; }
-    .icon-calendar:before { content: '\e801'; }
-    .icon-user:before { content: '\e802'; }
-    .icon-check:before { content: '\e804'; }
-    .icon-lock:before { content: '\e805'; }
-    .icon-chevron-left:before { content: '\f137'; }
-    .icon-chevron-right:before { content: '\f138'; }
-    .icon-spinner:before { content: '\f110'; }
-    .icon-spin { animation: spin 2s linear infinite; }
-    @keyframes spin { 0% { transform: rotate(0); } 100% { transform: rotate(360deg); } }
+        /* ICONS */
+        [class*=" icon-"],[class^=icon-]{font-family:fontello;speak:never;font-style:normal;font-weight:400;font-variant:normal;text-transform:none;line-height:1;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;display:inline-block}
+        .icon-menu:before{content:'\f0c9'}.icon-times:before{content:'\e800'}.icon-amazon:before{content:'\f270'}.icon-calendar:before{content:'\e801'}.icon-user:before{content:'\e802'}.icon-spinner:before{content:'\f110'}.icon-chevron-left:before{content:'\f137'}.icon-chevron-right:before{content:'\f138'}.icon-check:before{content:'\e804'}.icon-lock:before{content:'\e805'}.icon-check-circle:before{content:'\e809'}
+        .icon-spin{animation:2s linear infinite spin}@keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+        
+        /* GPU ANIMATION (Fixes Layout Shift) */
+        .pulse-anim{position:relative;z-index:1}.pulse-anim::before{content:'';position:absolute;top:0;left:0;bottom:0;right:0;border-radius:inherit;background-color:rgba(255,153,0,.6);z-index:-1;animation:pulse-ring 2s cubic-bezier(.215,.61,.355,1) infinite}@keyframes pulse-ring{0%{transform:scale(.95);opacity:1}50%{transform:scale(1.05);opacity:0}100%{transform:scale(1.05);opacity:0}}
 
-    /* 4. HEADER (Mobile) */
-    .header { position: relative; z-index: 50; background: rgba(255,255,255,0.95); border-bottom: 1px solid #e5e7eb; }
-    .header-container { height: 64px; display: flex; align-items: center; justify-content: space-between; }
-    .logo { font-size: 1.25rem; font-weight: 700; }
-    .logo span { color: var(--accent-blue); }
-    .mobile-menu-toggle { background: none; border: none; font-size: 1.5rem; color: #374151; }
-    .desktop-nav, .header-cta { display: none; } 
+        /* HEADER */
+        .header{position:relative;top:0;z-index:50;background-color:rgba(255,255,255,.95);backdrop-filter:blur(10px);border-bottom:1px solid #e5e7eb}
+        .header-container{height:64px;display:flex;align-items:center;justify-content:space-between}
+        .logo{font-size:1.25rem;font-weight:700}.logo span{color:var(--accent-blue)}
+        .mobile-menu-toggle{background:0 0;border:none;font-size:1.5rem;color:#374151}
+        .desktop-nav, .header-cta{display:none} /* Hide Desktop on Mobile Load */
 
-    /* 5. HERO SECTION */
-    .hero-section { padding: 1.5rem 0 3rem; background: linear-gradient(to bottom, #f9fafb, #fff); }
-    .hero-grid { display: grid; gap: 2rem; }
-    .hero-text { display: flex; flex-direction: column; }
-    
-    /* Meta Data */
-    .meta-data-wrapper { text-align: center; margin-bottom: 1rem; }
-    .meta-pill { display: inline-flex; align-items: center; background: #fff; border: 1px solid #e5e7eb; border-radius: 9999px; padding: 0.25rem 0.75rem; font-size: 0.75rem; color: #6b7280; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
-    .separator { width: 1px; height: 12px; background: #d1d5db; margin: 0 0.5rem; }
+        /* --- THE MOBILE MENU FIX --- */
+        /* Forces the menu off-screen IMMEDIATELY. No Flash. */
+        .mobile-menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: #fff;
+            z-index: 60;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+            transform: translateY(-100%); /* HIDDEN BY DEFAULT */
+        }
+        .close-menu{position:absolute;top:1.5rem;right:1.5rem;font-size:2rem;background:0 0;border:none}
 
-    /* Title & Rating */
-    .hero-title-wrapper h1 { font-size: 1.875rem; font-weight: 800; line-height: 1.2; text-align: center; margin-bottom: 0.5rem; color: #111827; }
-    .rating-wrapper { display: flex; justify-content: center; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; }
-    .stars-container { color: #facc15; }
-    .rating-text { font-size: 0.875rem; color: #6b7280; }
+        /* HERO SECTION */
+        .hero-section{padding:1.5rem 0 3rem;background:linear-gradient(to bottom,#f9fafb,#fff);overflow:hidden}
+        .hero-grid{display:grid;gap:2rem}
+        .hero-text{display:flex;flex-direction:column}
+        .meta-data-wrapper{text-align:center;margin-bottom:1rem}
+        .meta-pill{display:inline-flex;align-items:center;background:#fff;border:1px solid #e5e7eb;border-radius:9999px;padding:.25rem .75rem;font-size:.75rem;color:#6b7280;font-weight:500;gap:.5rem;box-shadow:0 1px 2px 0 rgba(0,0,0,.05)}
+        .separator{width:1px;height:12px;background:#d1d5db}
+        .hero-title-wrapper h1{font-size:1.875rem;font-weight:800;line-height:1.2;color:#111827;text-align:center;margin-bottom:.5rem}
+        .rating-wrapper{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-bottom:1.5rem}
+        .stars-container{color:#facc15}.rating-text{font-size:.875rem;color:#6b7280;font-weight:500}
+        .hero-description{text-align:center}.hero-description p{font-size:1.125rem;color:#4b5563;margin-bottom:1.5rem}
+        
+        /* CAROUSEL FIX (LCP & CLS) */
+        .mobile-carousel{margin-bottom:2rem;max-width:384px;margin-left:auto;margin-right:auto}
+        .carousel-container{
+            position:relative;
+            width:100%;
+            aspect-ratio:1/1; /* Reserved Space */
+            overflow:hidden;
+            background:#fff;
+            border-radius:1rem;
+            border:1px solid #f3f4f6;
+            box-shadow:0 1px 3px 0 rgba(0,0,0,.1)
+        }
+        .carousel-track{display:flex;height:100%;width:100%}
+        .carousel-track img{width:100%;height:100%;object-fit:contain;flex-shrink:0}
+        .prev-btn,.next-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.9);border:none;border-radius:50%;width:40px;height:40px;box-shadow:0 4px 6px -1px rgba(0,0,0,.1);z-index:10;display:flex;align-items:center;justify-content:center}.prev-btn{left:.5rem}.next-btn{right:.5rem}
+        .desktop-carousel-wrapper{display:none}
 
-    /* Carousel Fix (CLS) */
-    .mobile-carousel { margin-bottom: 2rem; max-width: 384px; margin-left: auto; margin-right: auto; }
-    .carousel-container { position: relative; width: 100%; aspect-ratio: 1 / 1; overflow: hidden; background: #fff; border-radius: 1rem; border: 1px solid #f3f4f6; }
-    .carousel-track { display: flex; height: 100%; width: 100%; }
-    .carousel-track img { width: 100%; height: 100%; object-fit: contain; flex-shrink: 0; }
-    .prev-btn, .next-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.9); border: none; border-radius: 50%; width: 40px; height: 40px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; z-index: 10; }
-    .prev-btn { left: 0.5rem; } .next-btn { right: 0.5rem; }
-    .desktop-carousel-wrapper { display: none; }
+        .cta-wrapper{display:flex;justify-content:center;gap:1rem}
+        .btn-amazon-large{background:linear-gradient(to right,var(--amazon-orange),#eab308);color:#fff;padding:1rem 2rem;border-radius:9999px;font-weight:700;font-size:1.125rem;box-shadow:0 10px 15px -3px rgba(0,0,0,.1);display:inline-flex;align-items:center;gap:.5rem}
+        .secure-text{font-size:.75rem;color:#6b7280;margin-top:.75rem;text-align:center}
 
-    /* CTA Buttons & Pulse */
-    .cta-wrapper { display: flex; justify-content: center; gap: 1rem; }
-    .btn-amazon-large { background: linear-gradient(to right, var(--amazon-orange), #eab308); color: #fff; padding: 1rem 2rem; border-radius: 9999px; font-weight: 700; font-size: 1.125rem; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); display: inline-flex; align-items: center; gap: 0.5rem; }
-    .secure-text { font-size: 0.75rem; color: #6b7280; margin-top: 0.75rem; text-align: center; }
-    .hero-description { text-align: center; }
-    
-    /* GPU Animation */
-    .pulse-anim { position: relative; z-index: 1; }
-    .pulse-anim::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; right: 0; border-radius: inherit; background-color: rgba(255, 153, 0, 0.6); z-index: -1; animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite; }
-    @keyframes pulse-ring { 0% { transform: scale(0.95); opacity: 1; } 50% { transform: scale(1.05); opacity: 0; } 100% { transform: scale(1.05); opacity: 0; } }
+        /* STICKY FOOTER */
+        .mobile-sticky-footer{position:fixed;bottom:0;left:0;width:100%;background:rgba(255,255,255,.95);border-top:1px solid #e5e7eb;padding:.75rem;display:flex;justify-content:space-between;align-items:center;z-index:50}
+        .footer-info{display:flex;flex-direction:column}
+        .footer-prod-name{font-weight:700;font-size:.875rem;color:#111827}
+        .footer-deal-text{color:#16a34a;font-size:.75rem;font-weight:700;display:flex;align-items:center;gap:.25rem}
+        .btn-amazon-small{background-color:var(--amazon-orange);color:#fff;padding:.5rem 1rem;border-radius:9999px;font-size:.875rem;font-weight:700;display:inline-flex;align-items:center;gap:.5rem}
 
-    /* Sticky Footer */
-    .mobile-sticky-footer { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(255,255,255,0.95); border-top: 1px solid #e5e7eb; padding: 0.75rem; display: flex; justify-content: space-between; align-items: center; z-index: 50; }
-    .footer-info { display: flex; flex-direction: column; }
-    .footer-prod-name { font-weight: 700; font-size: 0.875rem; color: #111827; }
-    .footer-deal-text { color: #16a34a; font-size: 0.75rem; font-weight: 700; }
-    .btn-amazon-small { background-color: var(--amazon-orange); color: #fff; padding: 0.5rem 1rem; border-radius: 9999px; font-size: 0.875rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.5rem; }
+        /* DESKTOP TOGGLE */
+        @media (min-width:768px){
+            .mobile-sticky-footer, .mobile-menu-toggle { display: none; }
+            .desktop-nav, .header-cta { display: block; }
+        }
+        @media (min-width:1024px){
+            .hero-section{padding:3rem 0 5rem}.hero-grid{grid-template-columns:1fr 1fr;align-items:center}.meta-data-wrapper{text-align:left}.hero-title-wrapper h1{font-size:3rem;text-align:left}.rating-wrapper{justify-content:flex-start}.hero-description{text-align:left}.cta-wrapper{justify-content:flex-start}.mobile-carousel{display:none}.desktop-carousel-wrapper{display:block;position:relative}.desktop-carousel{max-width:500px;margin:0 auto;box-shadow:0 20px 25px -5px rgba(0,0,0,.1)}
+        }
+    </style>
 
-    /* 6. MOBILE MENU FIX (IMPORTANT) */
-    /* We define the position here so it starts off-screen instantly. */
-    /* WE DO NOT INCLUDE 'transition' HERE. That comes later in style.css */
-    .mobile-menu-overlay {
-        position: fixed;
-        inset: 0;
-        background: #fff;
-        z-index: 60;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 1.5rem;
-        font-size: 1.25rem;
-        font-weight: 600;
-        /* Crucial: Hide it immediately */
-        transform: translateY(-100%);
-    }
-    .close-menu { position: absolute; top: 1.5rem; right: 1.5rem; font-size: 2rem; background: none; border: none; }
-
-    @media (min-width: 768px) {
-        .mobile-sticky-footer, .mobile-menu-toggle { display: none; }
-        .desktop-nav, .header-cta { display: block; }
-    }
-</style>
-
-    <!-- 5. ASYNC CSS & FONTS (Load after Critical CSS) -->
-    <!-- Load main style.css Asynchronously -->
+    <!-- 4. LOAD FULL CSS ASYNC -->
     <link rel="stylesheet" href="style.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="style.css"></noscript>
 
-    <!-- Google Fonts -->
+    <!-- 5. GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -158,16 +136,18 @@
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     </noscript>
     
-    <!-- 6. DEFERRED SCRIPTS (Non-Blocking) -->
-    <!-- Deferred Main Script -->
+    <!-- 6. OPEN GRAPH -->
+    <meta property="og:title" content="Apple Watch Ultra 3 Price, Specs, Review & Best Deals (2025 Guide)">
+    <meta property="og:description" content="Is the upgrade worth it? Full breakdown of specs, price, and battery life.">
+    <meta property="og:type" content="product">
+    <meta property="og:url" content="https://exactwatch.shop/">
+    <meta property="og:image" content="https://exactwatch.shop/Images/productimage1.webp">
+    
+    <!-- 7. SCRIPTS (Deferred & Delayed) -->
     <script src="script.js" defer></script>
-
-    <!-- Delayed Google Analytics -->
     <script>
     (function() {
-        // REPLACE THIS WITH YOUR ACTUAL TRACKING ID
         var gaID = 'G-YOUR-ID-HERE'; 
-        
         var gaLoaded = false;
         function loadAnalytics() {
             if (gaLoaded) return;
@@ -189,8 +169,7 @@
     })();
     </script>
 
-    <!-- 7. SCHEMA (JSON-LD) -->
-    <!-- Product Schema -->
+    <!-- 8. SCHEMA -->
     <script id="dynamic-schema" type="application/ld+json">
     {
       "@context": "https://schema.org/",
@@ -213,7 +192,6 @@
       }
     }
     </script>
-    <!-- FAQ SCHEMA -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -801,6 +779,7 @@
 
 </body>
 </html>
+
 
 
 
