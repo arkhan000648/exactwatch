@@ -1,0 +1,223 @@
+/* --- 1. STRICT STICKY LOGIC ENFORCEMENT --- */
+
+/* MOBILE DEFAULT (Screens < 768px) */
+.header {
+    position: relative !important; 
+    top: 0;
+}
+.mobile-sticky-footer {
+    display: flex !important;
+    position: fixed !important;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+}
+body {
+    padding-bottom: 80px; 
+}
+
+/* DESKTOP OVERRIDE (Screens >= 768px) */
+@media (min-width: 768px) {
+    .header {
+        position: sticky !important;
+        top: 0;
+        width: 100%;
+        z-index: 50;
+    }
+    .mobile-sticky-footer {
+        display: none !important;
+    }
+    body {
+        padding-bottom: 0;
+    }
+}
+
+/* --- 2. ABOUT PAGE SPECIFIC DESIGN --- */
+
+/* Hero */
+.about-hero {
+    padding: 4rem 0 3rem;
+    background-color: #f5f5f7; /* Apple Gray */
+    border-bottom: 1px solid #d1d5db;
+}
+.about-tagline {
+    color: #0071e3; /* Accent Blue */
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+.about-hero h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #1d1d1f;
+    margin-bottom: 1rem;
+}
+.hero-description {
+    font-size: 1.125rem;
+    color: #4b5563;
+    line-height: 1.6;
+}
+
+/* Mission Section */
+.mission-section {
+    padding: 4rem 0;
+    background: white;
+}
+.mission-box {
+    background: #eff6ff; /* Light Blue */
+    padding: 2.5rem;
+    border-radius: 1rem;
+    text-align: center;
+    border: 1px solid #dbeafe;
+}
+.mission-box i {
+    font-size: 3rem;
+    color: #0071e3;
+    margin-bottom: 1rem;
+    display: inline-block;
+}
+.mission-box h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #1d1d1f;
+    font-weight: 700;
+}
+.mission-box p {
+    font-size: 1.125rem;
+    color: #4b5563;
+    line-height: 1.7;
+}
+
+/* Author Section (EEAT) */
+.author-section {
+    padding: 4rem 0;
+    background: white;
+    border-top: 1px solid #e5e7eb;
+}
+.author-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+}
+@media (min-width: 768px) {
+    .author-grid {
+        flex-direction: row;
+        align-items: center;
+        gap: 3rem;
+    }
+}
+.author-image-wrapper {
+    flex-shrink: 0;
+    text-align: center;
+}
+.author-img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #f5f5f7;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+}
+.author-bio {
+    text-align: center;
+}
+@media (min-width: 768px) {
+    .author-bio { text-align: left; }
+}
+.author-bio h3 {
+    color: #0071e3;
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+.author-bio h2 {
+    font-size: 2.25rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+    font-weight: 800;
+    color: #1d1d1f;
+}
+.author-bio p {
+    margin-bottom: 1rem;
+    color: #4b5563;
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+/* Process / Editorial Standards */
+.process-section {
+    padding: 4rem 0;
+    background: #f5f5f7;
+}
+.section-title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: #1d1d1f;
+}
+.process-grid {
+    display: grid;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+@media (min-width: 768px) {
+    .process-grid { grid-template-columns: 1fr 1fr 1fr; }
+}
+.process-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    border: 1px solid #e5e7eb;
+    text-align: center;
+    transition: transform 0.2s;
+}
+.process-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+}
+.process-card h4 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    color: #1d1d1f;
+    font-weight: 700;
+}
+.process-card p {
+    font-size: 0.95rem;
+    color: #4b5563;
+    line-height: 1.5;
+}
+
+/* Trust Section */
+.trust-section {
+    padding: 4rem 0;
+    background: white;
+    border-top: 1px solid #e5e7eb;
+    text-align: center;
+}
+.trust-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #1d1d1f;
+    font-weight: 700;
+}
+.trust-section p {
+    margin-bottom: 1.5rem;
+    color: #4b5563;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+
+.container-medium {
+    max-width: 896px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
