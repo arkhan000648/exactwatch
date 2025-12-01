@@ -23,14 +23,50 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
     
-    <!-- Google Fonts -->
+    <!-- Google Fonts (Optimized for Speed) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Load fonts non-blocking -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    </noscript>
 
     <!-- Preload Hero Image -->
 	<link rel="preload" as="image" href="Images/testimage.webp" fetchpriority="high">
     
+    <!-- Deferred Main Script -->
+    <script src="script.js" defer></script>
+
+    <!-- Delayed Google Analytics (Speed Optimization) -->
+    <script>
+    (function() {
+        // REPLACE THIS WITH YOUR ACTUAL TRACKING ID
+        var gaID = 'G-YOUR-ID-HERE'; 
+        
+        var gaLoaded = false;
+        function loadAnalytics() {
+            if (gaLoaded) return;
+            gaLoaded = true;
+            var script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=' + gaID;
+            document.head.appendChild(script);
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', gaID);
+        }
+        // Load on user interaction
+        var events = ['mousedown', 'mousemove', 'keydown', 'scroll', 'touchstart'];
+        events.forEach(function(e) {
+            window.addEventListener(e, loadAnalytics, { once: true, passive: true });
+        });
+        // Or load after 4 seconds if no interaction
+        setTimeout(loadAnalytics, 4000);
+    })();
+    </script>
+
     <!-- STATIC SCHEMA (Fallback + Dynamic Injection Target) -->
     <script id="dynamic-schema" type="application/ld+json">
     {
@@ -142,9 +178,11 @@
                         <div class="mobile-carousel">
                              <div class="carousel-container">
                                 <div class="carousel-track">
-                                    <img src="Images/testimage.webp" width="600" height="600" alt="Apple Watch Ultra 3 Titanium">
-                                    <img src="#" width="600" height="600" alt="Apple Watch Ultra 3 Side Profile">
-                                    <img src="#" width="600" height="600" alt="Apple Watch Ultra 3 Band">
+                                    <!-- LCP Image (Keep eager) -->
+                                    <img src="Images/testimage.webp" width="600" height="600" alt="Apple Watch Ultra 3 Titanium" fetchpriority="high">
+                                    <!-- Lazy Load others -->
+                                    <img src="#" width="600" height="600" alt="Apple Watch Ultra 3 Side Profile" loading="lazy" decoding="async">
+                                    <img src="#" width="600" height="600" alt="Apple Watch Ultra 3 Band" loading="lazy" decoding="async">
                                 </div>
                                 <button class="prev-btn" aria-label="Previous Slide"><i class="icon-chevron-left"></i></button>
                                 <button class="next-btn" aria-label="Next Slide"><i class="icon-chevron-right"></i></button>
@@ -178,9 +216,11 @@
                     <div class="desktop-carousel-wrapper">
                         <div class="carousel-container desktop-carousel">
                             <div class="carousel-track">
-                                <img src="Images/testimage.webp" width="600" height="600" alt="Apple Watch Ultra 3 Front">
-                                <img src="#" width="600" height="600" alt="Apple Watch Ultra 3 Side">
-                                <img src="#" width="600" height="600" alt="Apple Watch Ultra 3 Lifestyle">
+                                <!-- LCP Image Desktop (Keep eager) -->
+                                <img src="Images/testimage.webp" width="600" height="600" alt="Apple Watch Ultra 3 Front" fetchpriority="high">
+                                <!-- Lazy Load others -->
+                                <img src="#" width="600" height="600" alt="Apple Watch Ultra 3 Side" loading="lazy" decoding="async">
+                                <img src="#" width="600" height="600" alt="Apple Watch Ultra 3 Lifestyle" loading="lazy" decoding="async">
                             </div>
                             <button class="prev-btn" aria-label="Previous Slide"><i class="icon-chevron-left"></i></button>
                             <button class="next-btn" aria-label="Next Slide"><i class="icon-chevron-right"></i></button>
@@ -600,6 +640,5 @@
         </a>
     </div>
 
-    <script src="script.js"></script>
 </body>
 </html>
