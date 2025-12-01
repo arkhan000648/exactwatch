@@ -1,0 +1,124 @@
+/* --- 1. STRICT STICKY LOGIC (Desktop Header / Mobile Footer) --- */
+
+/* MOBILE DEFAULT (Screens < 768px) */
+.header {
+    position: relative !important; 
+    top: 0;
+}
+.mobile-sticky-footer {
+    display: flex !important;
+    position: fixed !important;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+}
+body {
+    padding-bottom: 80px; /* Prevent footer overlap */
+}
+
+/* DESKTOP OVERRIDE (Screens >= 768px) */
+@media (min-width: 768px) {
+    .header {
+        position: sticky !important;
+        top: 0;
+        width: 100%;
+        z-index: 50;
+    }
+    .mobile-sticky-footer {
+        display: none !important;
+    }
+    body {
+        padding-bottom: 0;
+    }
+}
+
+/* --- 2. PRIVACY PAGE STYLING --- */
+
+.privacy-hero {
+    background-color: #f5f5f7; /* Apple Gray */
+    padding: 3rem 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+.privacy-hero h1 {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #1d1d1f;
+    margin-bottom: 0.5rem;
+}
+.last-updated {
+    font-size: 0.875rem;
+    color: #6e6e73;
+    font-weight: 500;
+}
+
+.policy-content {
+    padding: 4rem 0;
+    background: white;
+}
+.policy-block {
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid #f3f4f6;
+    padding-bottom: 2rem;
+}
+.policy-block:last-child {
+    border-bottom: none;
+}
+
+.policy-block h2 {
+    font-size: 1.5rem;
+    color: #1d1d1f;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+.policy-block h3 {
+    font-size: 1.125rem;
+    color: #374151;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+.policy-block p {
+    font-size: 1rem;
+    color: #374151;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+.policy-list {
+    list-style: disc;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+    color: #374151;
+    line-height: 1.6;
+}
+.policy-list li {
+    margin-bottom: 0.5rem;
+}
+
+/* Cookie/Amazon Highlight Box */
+.highlight-box {
+    background-color: #f0fdf4; /* Light Green */
+    padding: 2rem;
+    border-radius: 0.75rem;
+    border-left: 5px solid #16a34a; /* Green Border */
+}
+.highlight-box h2 {
+    color: #15803d;
+}
+
+.contact-link {
+    display: inline-block;
+    color: #0071e3;
+    font-weight: 700;
+    text-decoration: none;
+}
+.contact-link:hover {
+    text-decoration: underline;
+}
+
+.container-medium {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
