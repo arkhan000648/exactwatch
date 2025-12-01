@@ -1,12 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
     
     // --- CONFIGURATION ---
-    // PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL BELOW:
     const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzX3d3e_FCMCm7eRsqIfHyWR6-srNKB4gKY7w1e8uvL7A25zGwlu-aIWa6TFCNJ-UQGXg/exec'; 
 
     // 1. Dynamic Date
     const dateElement = document.getElementById('dynamic-date');
-    dateElement.textContent = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    if(dateElement) {
+        dateElement.textContent = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    }
 
     // 2. Mobile Menu Logic
     const menuToggle = document.querySelector('.mobile-menu-toggle');
@@ -16,44 +17,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function toggleMenu() {
         menuOverlay.classList.toggle('active');
-        if (menuOverlay.classList.contains('active')) {
-            menuOverlay.classList.remove('translate-y-[-100%]');
-        } else {
-            menuOverlay.classList.add('translate-y-[-100%]');
-        }
     }
-    menuToggle.addEventListener('click', toggleMenu);
-    closeMenu.addEventListener('click', toggleMenu);
-    mobileLinks.forEach(link => link.addEventListener('click', toggleMenu));
 
-    // 3. Infinite Image Carousel (No rewind)
+    if(menuToggle) {
+        menuToggle.addEventListener('click', toggleMenu);
+        closeMenu.addEventListener('click', toggleMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', toggleMenu));
+    }
+
+    // 3. Infinite Image Carousel
     const setupCarousel = (container) => {
         const track = container.querySelector('.carousel-track');
         const nextBtn = container.querySelector('.next-btn');
         const prevBtn = container.querySelector('.prev-btn');
         
+        if (!track || !nextBtn || !prevBtn) return;
+
         let slides = Array.from(track.children);
+        if(slides.length === 0) return;
+
         let slideWidth = slides[0].getBoundingClientRect().width;
         
-        // Clone first and last slides for infinite effect
         const firstClone = slides[0].cloneNode(true);
         const lastClone = slides[slides.length - 1].cloneNode(true);
         
         track.appendChild(firstClone);
         track.insertBefore(lastClone, slides[0]);
         
-        // Re-query slides
         slides = Array.from(track.children);
-        
-        let index = 1; // Start at the first real slide (index 1 because of clone)
+        let index = 1;
         let isTransitioning = false;
 
         const setPosition = () => {
-            slideWidth = slides[0].getBoundingClientRect().width; // Re-calculate on resize
+            slideWidth = slides[0].getBoundingClientRect().width;
             track.style.transform = `translateX(-${index * slideWidth}px)`;
         };
 
-        // Initial set
         setPosition();
         window.addEventListener('resize', setPosition);
 
@@ -66,7 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         track.addEventListener('transitionend', () => {
             isTransitioning = false;
-            // Infinite Loop Logic
             if (slides[index] === firstClone) {
                 track.style.transition = 'none';
                 index = 1;
@@ -92,11 +90,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // Initialize carousels (Mobile & Desktop)
     document.querySelectorAll('.carousel-container').forEach(setupCarousel);
 
-
-    // 4. Review System (Optimistic UI + Google Sheets)
+    // 4. Review System
     const reviewForm = document.getElementById('reviewForm');
     const reviewsContainer = document.getElementById('reviewsContainer');
     const heroStarsContainer = document.getElementById('hero-stars');
@@ -104,71 +100,75 @@ document.addEventListener('DOMContentLoaded', () => {
     const submitBtn = document.getElementById('submitBtn');
     const statusMsg = document.getElementById('review-status');
 
-    // Fetch existing reviews on load
     fetchReviews();
 
-    reviewForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        // Get Values
-        const name = document.getElementById('reviewerName').value;
-        const email = document.getElementById('reviewerEmail').value; 
-        const rating = parseInt(document.getElementById('reviewerRating').value);
-        let text = document.getElementById('reviewerText').value;
+    if(reviewForm) {
+        reviewForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            if(localStorage.getItem('ultra3_reviewed')) {
+                alert("You have already reviewed this product.");
+                return;
+            }
 
-        // Security cleaning
-        text = text.replace(/<\/?[^>]+(>|$)/g, ""); 
-        if(/(https?:\/\/[^\s]+)/g.test(text)) text = text.replace(/(https?:\/\/[^\s]+)/g, "[link removed]");
+            const name = document.getElementById('reviewerName').value;
+            const email = document.getElementById('reviewerEmail').value; 
+            const rating = parseInt(document.getElementById('reviewerRating').value);
+            let text = document.getElementById('reviewerText').value;
 
-        const dateStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            text = text.replace(/<\/?[^>]+(>|$)/g, ""); 
+            if(/(https?:\/\/[^\s]+)/g.test(text)) text = text.replace(/(https?:\/\/[^\s]+)/g, "[link removed]");
 
-        // Optimistic Update
-        submitBtn.textContent = "Submitting...";
-        submitBtn.disabled = true;
+            const dateStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
-        // Show immediately
-        renderReviewCard({name, rating, review: text, date: dateStr}, true);
-        
-        localStorage.setItem('ultra3_reviewed', 'true');
-        
-        // Send Data
-        const data = { name, email, rating, review: text };
-        
-        fetch(GOOGLE_SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'text/plain' },
-            body: JSON.stringify(data)
-        })
-        .then(() => {
-            finalizeSubmission();
-        })
-        .catch(err => {
-            console.error(err);
-            finalizeSubmission(); 
+            submitBtn.textContent = "Submitting...";
+            submitBtn.disabled = true;
+
+            renderReviewCard({name, rating, review: text, date: dateStr}, true);
+            
+            localStorage.setItem('ultra3_reviewed', 'true');
+            
+            const data = { name, email, rating, review: text };
+            
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'text/plain' },
+                body: JSON.stringify(data)
+            })
+            .then(() => {
+                finalizeSubmission();
+            })
+            .catch(err => {
+                console.error(err);
+                finalizeSubmission(); 
+            });
         });
-    });
+    }
 
     function finalizeSubmission() {
-        submitBtn.textContent = "Submitted";
-        reviewForm.reset();
+        if(submitBtn) submitBtn.textContent = "Submitted";
+        if(reviewForm) reviewForm.reset();
         
         const inputs = reviewForm.querySelectorAll('input, select, textarea, button');
         inputs.forEach(input => input.disabled = true);
         
-        statusMsg.textContent = "Thanks! Your review has been added.";
-        statusMsg.classList.remove('hidden');
+        if(statusMsg) {
+            statusMsg.textContent = "Thanks! Your review has been added.";
+            statusMsg.classList.remove('hidden');
+        }
     }
 
     function fetchReviews() {
         fetch(GOOGLE_SCRIPT_URL)
         .then(response => response.json())
         .then(reviews => {
-            reviewsContainer.innerHTML = ''; 
+            if(reviewsContainer) reviewsContainer.innerHTML = ''; 
             
             if(!reviews || reviews.length === 0) {
-                reviewsContainer.innerHTML = '<p class="text-gray-500 italic text-sm text-center">No reviews yet. Be the first!</p>';
+                if(reviewsContainer) reviewsContainer.innerHTML = '<p class="loading-reviews">No reviews yet. Be the first!</p>';
                 updateHeroRating([]); 
+                injectSchema(0, 0); 
                 return;
             }
 
@@ -188,23 +188,25 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(e => {
             console.error(e);
-            reviewsContainer.innerHTML = '<p class="text-red-500 text-sm text-center">Could not load recent reviews.</p>';
+            if(reviewsContainer) reviewsContainer.innerHTML = '<p class="status-msg" style="color:#ef4444;">Could not load recent reviews.</p>';
         });
     }
 
     function renderReviewCard(data, prepend = false) {
+        if(!reviewsContainer) return;
         const stars = "⭐".repeat(data.rating);
+        
         const card = document.createElement('div');
-        card.className = "bg-gray-50 p-4 rounded-lg border border-gray-100";
+        card.className = "review-card";
         card.innerHTML = `
-            <div class="flex justify-between items-start mb-2">
+            <div class="review-header">
                 <div>
-                    <span class="font-bold text-sm block text-gray-800">${data.name}</span>
-                    <span class="text-xs text-yellow-500">${stars}</span>
+                    <span class="review-author">${data.name}</span>
+                    <span class="review-stars">${stars}</span>
                 </div>
-                <span class="text-xs text-gray-400">${data.date}</span>
+                <span class="review-date">${data.date}</span>
             </div>
-            <p class="text-sm text-gray-600 leading-relaxed">${data.review}</p>
+            <p class="review-body">${data.review}</p>
         `;
 
         if(prepend) {
@@ -215,9 +217,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateHeroRating(reviews) {
+        if(!heroStarsContainer || !heroRatingText) return;
+
         if(reviews.length === 0) {
-            heroStarsContainer.innerHTML = '<i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>';
+            heroStarsContainer.innerHTML = getStarIcons(0);
             heroRatingText.textContent = "(No ratings yet)";
+            injectSchema(0, 0);
             return;
         }
 
@@ -225,21 +230,78 @@ document.addEventListener('DOMContentLoaded', () => {
         reviews.forEach(r => total += parseInt(r.rating));
         const avg = (total / reviews.length).toFixed(1);
 
-        let starHTML = '';
-        for(let i=1; i<=5; i++) {
-            if(i <= Math.round(avg)) starHTML += '<i class="fas fa-star"></i>';
-            else starHTML += '<i class="far fa-star text-gray-300"></i>';
-        }
-
-        heroStarsContainer.innerHTML = starHTML;
+        heroStarsContainer.innerHTML = getStarIcons(avg);
         heroRatingText.textContent = `(${avg}/5 based on ${reviews.length} reviews)`;
+
+        injectSchema(avg, reviews.length, reviews);
+    }
+
+    function getStarIcons(rating) {
+        let html = '';
+        const rounded = Math.round(rating);
+        
+        const fullStar = '<i class="icon-star"></i>';
+        const emptyStar = '<i class="icon-star" style="color:#d1d5db;"></i>';
+
+        for(let i=1; i<=5; i++) {
+            if(i <= rounded) html += fullStar;
+            else html += emptyStar;
+        }
+        return html;
+    }
+
+    function injectSchema(avg, count, reviews = []) {
+        const schemaScript = document.getElementById('dynamic-schema');
+        if(!schemaScript) return;
+
+        try {
+            const schemaData = JSON.parse(schemaScript.textContent);
+
+            const futureDate = new Date();
+            futureDate.setFullYear(futureDate.getFullYear() + 1);
+            const formattedDate = futureDate.toISOString().split('T')[0];
+            
+            if(schemaData.offers) {
+                schemaData.offers.priceValidUntil = formattedDate;
+            }
+
+            if (count > 0) {
+                schemaData.aggregateRating = {
+                    "@type": "AggregateRating",
+                    "ratingValue": avg.toString(),
+                    "reviewCount": count.toString(),
+                    "bestRating": "5",
+                    "worstRating": "1"
+                };
+
+                schemaData.review = reviews.slice(0, 5).map(r => ({
+                    "@type": "Review",
+                    "author": { "@type": "Person", "name": r.name },
+                    "datePublished": r.date,
+                    "reviewRating": {
+                        "@type": "Rating",
+                        "ratingValue": r.rating.toString(),
+                        "bestRating": "5",
+                        "worstRating": "1"
+                    },
+                    "reviewBody": r.review
+                }));
+            }
+
+            schemaScript.textContent = JSON.stringify(schemaData);
+
+        } catch (e) {
+            console.error("Schema Injection Error:", e);
+        }
     }
 
     if(localStorage.getItem('ultra3_reviewed')) {
         const inputs = reviewForm.querySelectorAll('input, select, textarea, button');
         inputs.forEach(input => input.disabled = true);
-        submitBtn.textContent = "Review Submitted";
-        statusMsg.textContent = "You have already reviewed this product.";
-        statusMsg.classList.remove('hidden');
+        if(submitBtn) submitBtn.textContent = "Review Submitted";
+        if(statusMsg) {
+            statusMsg.textContent = "You have already reviewed this product.";
+            statusMsg.classList.remove('hidden');
+        }
     }
 });
