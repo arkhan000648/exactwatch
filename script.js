@@ -25,107 +25,107 @@ document.addEventListener('DOMContentLoaded', () => {
         mobileLinks.forEach(link => link.addEventListener('click', toggleMenu));
     }
 
-    // 3. Infinite Image Carousel (Updated with Touch/Swipe Support)
-    const setupCarousel = (container) => {
-        const track = container.querySelector('.carousel-track');
-        const nextBtn = container.querySelector('.next-btn');
-        const prevBtn = container.querySelector('.prev-btn');
-        
-        if (!track || !nextBtn || !prevBtn) return;
+   // 3. Infinite Image Carousel (Optimized: No Reflows)
+const setupCarousel = (container) => {
+    const track = container.querySelector('.carousel-track');
+    const nextBtn = container.querySelector('.next-btn');
+    const prevBtn = container.querySelector('.prev-btn');
+    
+    if (!track || !nextBtn || !prevBtn) return;
 
-        let slides = Array.from(track.children);
-        if(slides.length === 0) return;
+    let slides = Array.from(track.children);
+    if(slides.length === 0) return;
 
-        // Ensure images are loaded before calculating width to prevent bugs
-        // (Optional safety check, though existing logic is fine)
-        
-        let slideWidth = slides[0].getBoundingClientRect().width;
-        
-        const firstClone = slides[0].cloneNode(true);
-        const lastClone = slides[slides.length - 1].cloneNode(true);
-        
-        track.appendChild(firstClone);
-        track.insertBefore(lastClone, slides[0]);
-        
-        slides = Array.from(track.children);
-        let index = 1;
-        let isTransitioning = false;
+    // CLONE SLIDES
+    const firstClone = slides[0].cloneNode(true);
+    const lastClone = slides[slides.length - 1].cloneNode(true);
+    
+    track.appendChild(firstClone);
+    track.insertBefore(lastClone, slides[0]);
+    
+    slides = Array.from(track.children); // Update list with clones
+    
+    let index = 1;
+    let isTransitioning = false;
 
-        const setPosition = () => {
-            slideWidth = slides[0].getBoundingClientRect().width;
-            track.style.transform = `translateX(-${index * slideWidth}px)`;
-        };
-
-        setPosition();
-        window.addEventListener('resize', setPosition);
-
-        const moveSlide = () => {
-            if (isTransitioning) return;
-            isTransitioning = true;
+    // --- FIX: USE PERCENTAGE INSTEAD OF PIXELS ---
+    // This removes getBoundingClientRect() and the forced reflow.
+    const updateSlidePosition = (enableTransition = true) => {
+        if (enableTransition) {
             track.style.transition = 'transform 0.5s ease-out';
-            track.style.transform = `translateX(-${index * slideWidth}px)`;
-        };
+        } else {
+            track.style.transition = 'none';
+        }
+        // Move by -100% * index
+        track.style.transform = `translateX(-${index * 100}%)`;
+    };
 
-        track.addEventListener('transitionend', () => {
-            isTransitioning = false;
-            if (slides[index] === firstClone) {
-                track.style.transition = 'none';
-                index = 1;
-                track.style.transform = `translateX(-${index * slideWidth}px)`;
-            }
-            if (slides[index] === lastClone) {
-                track.style.transition = 'none';
-                index = slides.length - 2;
-                track.style.transform = `translateX(-${index * slideWidth}px)`;
-            }
-        });
+    // Set initial position without transition
+    updateSlidePosition(false);
 
-        nextBtn.addEventListener('click', () => {
+    track.addEventListener('transitionend', () => {
+        isTransitioning = false;
+        if (slides[index] === firstClone) {
+            index = 1;
+            updateSlidePosition(false);
+        }
+        if (slides[index] === lastClone) {
+            index = slides.length - 2;
+            updateSlidePosition(false);
+        }
+    });
+
+    nextBtn.addEventListener('click', () => {
+        if (index >= slides.length - 1) return;
+        if (isTransitioning) return;
+        isTransitioning = true;
+        index++;
+        updateSlidePosition(true);
+    });
+
+    prevBtn.addEventListener('click', () => {
+        if (index <= 0) return;
+        if (isTransitioning) return;
+        isTransitioning = true;
+        index--;
+        updateSlidePosition(true);
+    });
+
+    // --- TOUCH EVENTS (Optimized) ---
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    track.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    track.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, { passive: true });
+
+    function handleSwipe() {
+        const threshold = 50; 
+        if (touchStartX - touchEndX > threshold) {
+            // Swipe Left (Next)
             if (index >= slides.length - 1) return;
-            index++;
-            moveSlide();
-        });
-
-        prevBtn.addEventListener('click', () => {
-            if (index <= 0) return;
-            index--;
-            moveSlide();
-        });
-
-        // --- NEW CODE: TOUCH EVENTS FOR MOBILE SWIPE ---
-        let touchStartX = 0;
-        let touchEndX = 0;
-
-        track.addEventListener('touchstart', (e) => {
-            // Record where the finger landed
-            touchStartX = e.changedTouches[0].screenX;
-        }, { passive: true }); // 'passive' improves scrolling performance
-
-        track.addEventListener('touchend', (e) => {
-            // Record where the finger lifted
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        }, { passive: true });
-
-        function handleSwipe() {
-            const threshold = 50; // Minimum distance (px) to count as a swipe
-            
-            // Swipe Left (User moves finger Right to Left -> Next Image)
-            if (touchStartX - touchEndX > threshold) {
-                if (index >= slides.length - 1) return;
+            if (!isTransitioning) {
+                isTransitioning = true;
                 index++;
-                moveSlide();
-            }
-            
-            // Swipe Right (User moves finger Left to Right -> Prev Image)
-            if (touchEndX - touchStartX > threshold) {
-                if (index <= 0) return;
-                index--;
-                moveSlide();
+                updateSlidePosition(true);
             }
         }
-        // --- END NEW CODE ---
-    };
+        if (touchEndX - touchStartX > threshold) {
+            // Swipe Right (Prev)
+            if (index <= 0) return;
+            if (!isTransitioning) {
+                isTransitioning = true;
+                index--;
+                updateSlidePosition(true);
+            }
+        }
+    }
+};
 
     document.querySelectorAll('.carousel-container').forEach(setupCarousel);
 
@@ -342,4 +342,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+
 
