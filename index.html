@@ -17,6 +17,11 @@
     <link rel="preload" href="Images/productimage1.webp" as="image" fetchpriority="high">
     <!-- Preload the Icon Font -->
     <link rel="preload" href="font/fontello.woff2" as="font" type="font/woff2" crossorigin>
+    
+    <!-- [NEW] Module Preloads to Fix Network Chaining (Firebase Speed Fix) -->
+    <link rel="modulepreload" href="script.js">
+    <link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js">
+    <link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js">
 
     <!-- 3. CRITICAL CSS (Includes the MENU FIX) -->
     <style>
@@ -714,7 +719,7 @@
                             <form id="reviewForm">
                                 <input type="text" id="reviewerName" placeholder="Your Name" required>
                                 <input type="email" id="reviewerEmail" placeholder="Your Email (Private)" required>
-                                <select id="reviewerRating" required>
+                                <select id="reviewerRating" required aria-label="Review Rating">
                                     <option value="5">⭐⭐⭐⭐⭐ (Excellent)</option>
                                     <option value="4">⭐⭐⭐⭐ (Good)</option>
                                     <option value="3">⭐⭐⭐ (Average)</option>
@@ -779,9 +784,3 @@
 
 </body>
 </html>
-
-
-
-
-
-
