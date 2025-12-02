@@ -1,7 +1,25 @@
+// --- IMPORT FIREBASE MODULES (No extra downloads needed) ---
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+// --- FIREBASE CONFIGURATION ---
+// REPLACE THIS WHOLE SECTION WITH YOUR COPIED CONFIG FROM PHASE 2
+const firebaseConfig = {
+  apiKey: "AIzaSyBNNUA3tXuVgvvkew786hB3hhGgQsoQzS0",
+  authDomain: "apple-watch-ultra-3-reviews.firebaseapp.com",
+  databaseURL: "https://apple-watch-ultra-3-reviews-default-rtdb.firebaseio.com",
+  projectId: "apple-watch-ultra-3-reviews",
+  storageBucket: "apple-watch-ultra-3-reviews.firebasestorage.app",
+  messagingSenderId: "285528635238",
+  appId: "1:285528635238:web:98a221cc51d1c7316bbaa7"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const reviewsRef = ref(db, 'reviews'); // This connects to the 'reviews' folder in DB
+
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // --- CONFIGURATION ---
-    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxrEAAdFp2p0LXPYfd1COyA_8pV2Phrwq7LCkys83H0yjfdvtJL7CNzy11wqFnUCjXO/exec'; 
 
     // 1. Dynamic Date
     const dateElement = document.getElementById('dynamic-date');
@@ -25,111 +43,103 @@ document.addEventListener('DOMContentLoaded', () => {
         mobileLinks.forEach(link => link.addEventListener('click', toggleMenu));
     }
 
-   // 3. Infinite Image Carousel (Optimized: No Reflows)
-const setupCarousel = (container) => {
-    const track = container.querySelector('.carousel-track');
-    const nextBtn = container.querySelector('.next-btn');
-    const prevBtn = container.querySelector('.prev-btn');
-    
-    if (!track || !nextBtn || !prevBtn) return;
+    // 3. Infinite Image Carousel
+    const setupCarousel = (container) => {
+        const track = container.querySelector('.carousel-track');
+        const nextBtn = container.querySelector('.next-btn');
+        const prevBtn = container.querySelector('.prev-btn');
+        
+        if (!track || !nextBtn || !prevBtn) return;
 
-    let slides = Array.from(track.children);
-    if(slides.length === 0) return;
+        let slides = Array.from(track.children);
+        if(slides.length === 0) return;
 
-    // CLONE SLIDES
-    const firstClone = slides[0].cloneNode(true);
-    const lastClone = slides[slides.length - 1].cloneNode(true);
-    
-    track.appendChild(firstClone);
-    track.insertBefore(lastClone, slides[0]);
-    
-    slides = Array.from(track.children); // Update list with clones
-    
-    let index = 1;
-    let isTransitioning = false;
+        const firstClone = slides[0].cloneNode(true);
+        const lastClone = slides[slides.length - 1].cloneNode(true);
+        
+        track.appendChild(firstClone);
+        track.insertBefore(lastClone, slides[0]);
+        
+        slides = Array.from(track.children);
+        
+        let index = 1;
+        let isTransitioning = false;
 
-    // --- FIX: USE PERCENTAGE INSTEAD OF PIXELS ---
-    // This removes getBoundingClientRect() and the forced reflow.
-    const updateSlidePosition = (enableTransition = true) => {
-        if (enableTransition) {
-            track.style.transition = 'transform 0.5s ease-out';
-        } else {
-            track.style.transition = 'none';
-        }
-        // Move by -100% * index
-        track.style.transform = `translateX(-${index * 100}%)`;
-    };
+        const updateSlidePosition = (enableTransition = true) => {
+            if (enableTransition) {
+                track.style.transition = 'transform 0.5s ease-out';
+            } else {
+                track.style.transition = 'none';
+            }
+            track.style.transform = `translateX(-${index * 100}%)`;
+        };
 
-    // Set initial position without transition
-    updateSlidePosition(false);
+        updateSlidePosition(false);
 
-    track.addEventListener('transitionend', () => {
-        isTransitioning = false;
-        if (slides[index] === firstClone) {
-            index = 1;
-            updateSlidePosition(false);
-        }
-        if (slides[index] === lastClone) {
-            index = slides.length - 2;
-            updateSlidePosition(false);
-        }
-    });
+        track.addEventListener('transitionend', () => {
+            isTransitioning = false;
+            if (slides[index] === firstClone) {
+                index = 1;
+                updateSlidePosition(false);
+            }
+            if (slides[index] === lastClone) {
+                index = slides.length - 2;
+                updateSlidePosition(false);
+            }
+        });
 
-    nextBtn.addEventListener('click', () => {
-        if (index >= slides.length - 1) return;
-        if (isTransitioning) return;
-        isTransitioning = true;
-        index++;
-        updateSlidePosition(true);
-    });
-
-    prevBtn.addEventListener('click', () => {
-        if (index <= 0) return;
-        if (isTransitioning) return;
-        isTransitioning = true;
-        index--;
-        updateSlidePosition(true);
-    });
-
-    // --- TOUCH EVENTS (Optimized) ---
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    track.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-    }, { passive: true });
-
-    track.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-    }, { passive: true });
-
-    function handleSwipe() {
-        const threshold = 50; 
-        if (touchStartX - touchEndX > threshold) {
-            // Swipe Left (Next)
+        nextBtn.addEventListener('click', () => {
             if (index >= slides.length - 1) return;
-            if (!isTransitioning) {
-                isTransitioning = true;
-                index++;
-                updateSlidePosition(true);
-            }
-        }
-        if (touchEndX - touchStartX > threshold) {
-            // Swipe Right (Prev)
-            if (index <= 0) return;
-            if (!isTransitioning) {
-                isTransitioning = true;
-                index--;
-                updateSlidePosition(true);
-            }
-        }
-    }
-};
+            if (isTransitioning) return;
+            isTransitioning = true;
+            index++;
+            updateSlidePosition(true);
+        });
 
+        prevBtn.addEventListener('click', () => {
+            if (index <= 0) return;
+            if (isTransitioning) return;
+            isTransitioning = true;
+            index--;
+            updateSlidePosition(true);
+        });
+
+        // Touch Events
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        track.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        track.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const threshold = 50; 
+            if (touchStartX - touchEndX > threshold) {
+                if (index >= slides.length - 1) return;
+                if (!isTransitioning) {
+                    isTransitioning = true;
+                    index++;
+                    updateSlidePosition(true);
+                }
+            }
+            if (touchEndX - touchStartX > threshold) {
+                if (index <= 0) return;
+                if (!isTransitioning) {
+                    isTransitioning = true;
+                    index--;
+                    updateSlidePosition(true);
+                }
+            }
+        }
+    };
     document.querySelectorAll('.carousel-container').forEach(setupCarousel);
 
-    // 4. Review System
+    // 4. REAL-TIME REVIEW SYSTEM (Firebase)
     const reviewForm = document.getElementById('reviewForm');
     const reviewsContainer = document.getElementById('reviewsContainer');
     const heroStarsContainer = document.getElementById('hero-stars');
@@ -137,54 +147,83 @@ const setupCarousel = (container) => {
     const submitBtn = document.getElementById('submitBtn');
     const statusMsg = document.getElementById('review-status');
 
-    fetchReviews();
+    // A. LISTEN FOR DATA (This runs on load AND when new data arrives instantly)
+    onValue(reviewsRef, (snapshot) => {
+        const data = snapshot.val();
+        
+        if (reviewsContainer) reviewsContainer.innerHTML = ''; // Clear current list
 
+        if (!data) {
+            // No reviews found
+            if(reviewsContainer) reviewsContainer.innerHTML = '<p class="loading-reviews">No reviews yet. Be the first!</p>';
+            updateHeroRating([]); 
+            return;
+        }
+
+        // Convert Object {id: {data}, id: {data}} to Array [{data}, {data}]
+        const reviewsArray = Object.values(data);
+        
+        // Update Stats & Schema
+        updateHeroRating(reviewsArray);
+
+        // Render List (Newest First)
+        reviewsArray.reverse().forEach(r => {
+            renderReviewCard(r);
+        });
+    });
+
+    // B. SUBMIT DATA TO FIREBASE
     if(reviewForm) {
         reviewForm.addEventListener('submit', (e) => {
             e.preventDefault();
             
+            // 1. Anti-Spam Check
             if(localStorage.getItem('ultra3_reviewed')) {
                 alert("You have already reviewed this product.");
                 return;
             }
 
+            // 2. Gather Data
             const name = document.getElementById('reviewerName').value;
-            const email = document.getElementById('reviewerEmail').value; 
             const rating = parseInt(document.getElementById('reviewerRating').value);
             let text = document.getElementById('reviewerText').value;
 
+            // 3. Sanitize
             text = text.replace(/<\/?[^>]+(>|$)/g, ""); 
             if(/(https?:\/\/[^\s]+)/g.test(text)) text = text.replace(/(https?:\/\/[^\s]+)/g, "[link removed]");
 
             const dateStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
+            // 4. Update UI Button
             submitBtn.textContent = "Submitting...";
             submitBtn.disabled = true;
 
-            renderReviewCard({name, rating, review: text, date: dateStr}, true);
-            
-            localStorage.setItem('ultra3_reviewed', 'true');
-            
-            const data = { name, email, rating, review: text };
-            
-            fetch(GOOGLE_SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'text/plain' },
-                body: JSON.stringify(data)
-            })
-            .then(() => {
-                finalizeSubmission();
-            })
-            .catch(err => {
-                console.error(err);
-                finalizeSubmission(); 
-            });
+            // 5. Send to Firebase (Realtime Database)
+            const newReviewData = {
+                name: name,
+                rating: rating,
+                review: text,
+                date: dateStr,
+                timestamp: Date.now() // Good for sorting later if needed
+            };
+
+            push(reviewsRef, newReviewData)
+                .then(() => {
+                    // Success!
+                    localStorage.setItem('ultra3_reviewed', 'true');
+                    finalizeSubmission();
+                })
+                .catch((error) => {
+                    console.error("Firebase Error:", error);
+                    alert("Error submitting review. Please try again.");
+                    submitBtn.textContent = "Submit Review";
+                    submitBtn.disabled = false;
+                });
         });
     }
 
     function finalizeSubmission() {
-        if(submitBtn) submitBtn.textContent = "Submitted";
+        if(submitBtn) submitBtn.textContent = "Review Submitted";
         if(reviewForm) reviewForm.reset();
         
         const inputs = reviewForm.querySelectorAll('input, select, textarea, button');
@@ -196,40 +235,7 @@ const setupCarousel = (container) => {
         }
     }
 
-    function fetchReviews() {
-        fetch(GOOGLE_SCRIPT_URL)
-        .then(response => response.json())
-        .then(reviews => {
-            if(reviewsContainer) reviewsContainer.innerHTML = ''; 
-            
-            if(!reviews || reviews.length === 0) {
-                if(reviewsContainer) reviewsContainer.innerHTML = '<p class="loading-reviews">No reviews yet. Be the first!</p>';
-                updateHeroRating([]); 
-                injectSchema(0, 0); 
-                return;
-            }
-
-            reviews.reverse().forEach(r => {
-                let d = r.date;
-                if(d.includes('T')) d = new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-                
-                renderReviewCard({
-                    name: r.name,
-                    rating: parseInt(r.rating),
-                    review: r.review,
-                    date: d
-                });
-            });
-
-            updateHeroRating(reviews);
-        })
-        .catch(e => {
-            console.error(e);
-            if(reviewsContainer) reviewsContainer.innerHTML = '<p class="status-msg" style="color:#ef4444;">Could not load recent reviews.</p>';
-        });
-    }
-
-    function renderReviewCard(data, prepend = false) {
+    function renderReviewCard(data) {
         if(!reviewsContainer) return;
         const stars = "⭐".repeat(data.rating);
         
@@ -245,12 +251,7 @@ const setupCarousel = (container) => {
             </div>
             <p class="review-body">${data.review}</p>
         `;
-
-        if(prepend) {
-            reviewsContainer.insertBefore(card, reviewsContainer.firstChild);
-        } else {
-            reviewsContainer.appendChild(card);
-        }
+        reviewsContainer.appendChild(card);
     }
 
     function updateHeroRating(reviews) {
@@ -276,7 +277,6 @@ const setupCarousel = (container) => {
     function getStarIcons(rating) {
         let html = '';
         const rounded = Math.round(rating);
-        
         const fullStar = '<i class="icon-star"></i>';
         const emptyStar = '<i class="icon-star" style="color:#d1d5db;"></i>';
 
@@ -311,6 +311,7 @@ const setupCarousel = (container) => {
                     "worstRating": "1"
                 };
 
+                // Add schema for top 5 reviews
                 schemaData.review = reviews.slice(0, 5).map(r => ({
                     "@type": "Review",
                     "author": { "@type": "Person", "name": r.name },
@@ -332,8 +333,9 @@ const setupCarousel = (container) => {
         }
     }
 
+    // Check LocalStorage on load to disable form if already reviewed
     if(localStorage.getItem('ultra3_reviewed')) {
-        const inputs = reviewForm.querySelectorAll('input, select, textarea, button');
+        const inputs = reviewForm ? reviewForm.querySelectorAll('input, select, textarea, button') : [];
         inputs.forEach(input => input.disabled = true);
         if(submitBtn) submitBtn.textContent = "Review Submitted";
         if(statusMsg) {
@@ -342,5 +344,3 @@ const setupCarousel = (container) => {
         }
     }
 });
-
-
