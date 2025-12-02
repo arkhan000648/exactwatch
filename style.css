@@ -161,7 +161,16 @@ ul { list-style: none; }
 .separator { width: 1px; height: 12px; background: #d1d5db; }
 .hero-title-wrapper h1 { font-size: 1.875rem; font-weight: 800; line-height: 1.2; color: #111827; text-align: center; margin-bottom: 0.5rem; }
 @media (min-width: 1024px) { .hero-title-wrapper h1 { font-size: 3rem; text-align: left; } }
-.rating-wrapper { display: flex; justify-content: center; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; }
+
+/* RATING WRAPPER FIXED */
+.rating-wrapper { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 0.5rem; 
+    margin-bottom: 1.5rem; 
+    min-height: 27px; /* Fix Mobile CLS Jump */
+}
 @media (min-width: 1024px) { .rating-wrapper { justify-content: flex-start; } }
 .stars-container { color: #facc15; }
 .rating-text { font-size: 0.875rem; color: #6b7280; font-weight: 500; }
@@ -188,15 +197,14 @@ ul { list-style: none; }
 @media (min-width: 1024px) { .mobile-carousel { display: none; } }
 .desktop-carousel-wrapper { display: none; }
 
-/* --- DESKTOP CAROUSEL CLS FIX --- */
-/* Added aspect-ratio here to prevent layout shift on large screens */
+/* DESKTOP CAROUSEL FIXED */
 @media (min-width: 1024px) { 
     .desktop-carousel-wrapper { display: block; position: relative; } 
     .desktop-carousel { 
         max-width: 500px; 
         margin: 0 auto; 
         box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); 
-        aspect-ratio: 1 / 1; /* CLS Fix */
+        aspect-ratio: 1 / 1; /* Fixes Desktop Layout Shift */
     } 
 }
 
