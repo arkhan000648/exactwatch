@@ -187,7 +187,18 @@ ul { list-style: none; }
 .mobile-carousel { margin-bottom: 2rem; max-width: 384px; margin-left: auto; margin-right: auto; }
 @media (min-width: 1024px) { .mobile-carousel { display: none; } }
 .desktop-carousel-wrapper { display: none; }
-@media (min-width: 1024px) { .desktop-carousel-wrapper { display: block; position: relative; } .desktop-carousel { max-width: 500px; margin: 0 auto; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); } }
+
+/* --- DESKTOP CAROUSEL CLS FIX --- */
+/* Added aspect-ratio here to prevent layout shift on large screens */
+@media (min-width: 1024px) { 
+    .desktop-carousel-wrapper { display: block; position: relative; } 
+    .desktop-carousel { 
+        max-width: 500px; 
+        margin: 0 auto; 
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); 
+        aspect-ratio: 1 / 1; /* CLS Fix */
+    } 
+}
 
 /* TOC */
 .toc-section { padding: 2rem 0; border-bottom: 1px solid #f3f4f6; }
@@ -532,4 +543,3 @@ ul { list-style: none; }
     margin-bottom: 1.5rem;
     color: #4b5563;
 }
-
