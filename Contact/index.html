@@ -186,7 +186,31 @@
             <i class="icon-amazon"></i> Check Stock
         </a>
     </div>
-
+<script>
+    (function() {
+        var gaID = 'G-DZX4YE1LBQ'; 
+        var gaLoaded = false;
+        function loadAnalytics() {
+            if (gaLoaded) return;
+            gaLoaded = true;
+            var script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=' + gaID;
+            document.head.appendChild(script);
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', gaID);
+        }
+        // Defer loading until user interaction or after a delay
+        var events = ['mousedown', 'mousemove', 'keydown', 'scroll', 'touchstart'];
+        events.forEach(function(e) {
+            window.addEventListener(e, loadAnalytics, { once: true, passive: true });
+        });
+        setTimeout(loadAnalytics, 4000);
+    })();
+    </script>
 </body>
 </html>
+
 
