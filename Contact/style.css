@@ -1,5 +1,12 @@
-/* --- 1. STRICT STICKY LOGIC ENFORCEMENT --- */
+/* --- 0. SAFETY: Ensure Mobile Menu Transition Works Locally --- */
+.mobile-menu-overlay {
+    transition: transform 0.3s ease-in-out;
+}
+.mobile-menu-overlay.active {
+    transform: translateY(0) !important;
+}
 
+/* --- 1. STRICT STICKY LOGIC ENFORCEMENT --- */
 /* MOBILE DEFAULT (Screens < 768px) */
 .header {
     position: relative !important; 
@@ -41,7 +48,6 @@ body {
 }
 
 /* --- 2. CONTACT PAGE SPECIFIC DESIGN --- */
-
 .contact-hero {
     background-color: #f5f5f7;
     padding: 3rem 0;
@@ -95,7 +101,6 @@ body {
     gap: 0.5rem;
     color: #1d1d1f;
 }
-.info-box h3 i { color: #0071e3; }
 .small-text {
     font-size: 0.875rem;
     color: #6b7280;
